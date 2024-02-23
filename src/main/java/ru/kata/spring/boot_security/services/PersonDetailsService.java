@@ -32,13 +32,13 @@ public class PersonDetailsService implements UserDetailsService {
     /**
      * Загружает пользователя по его имени для Spring Security.
      *
-     * @param username Имя пользователя.
+     * @param email почта пользователя.
      * @return Объект UserDetails, представляющий информацию о пользователе.
      * @throws UsernameNotFoundException если пользователь не найден.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> personOptional = peopleRepository.findByFirstName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Person> personOptional = peopleRepository.findByEmail(email);
 
         if (personOptional.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");

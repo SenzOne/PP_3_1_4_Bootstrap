@@ -37,6 +37,7 @@ public class MyDataInitializer {
             Person adminUser = new Person();
             adminUser.setFirstName("admin");
             adminUser.setLastName("admin");
+            adminUser.setEmail("admin@mail");
             adminUser.setPassword(passwordEncoder.encode("admin"));
             registrationService.registerAdmin(adminUser);
             System.out.println("Users created:");
