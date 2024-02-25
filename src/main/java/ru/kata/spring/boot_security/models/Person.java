@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "Preson", schema = "web_admin_security")
+@Table(name = "Person", schema = "web_admin_security")
 public class Person {
 
     @Id
@@ -20,10 +20,12 @@ public class Person {
     @NotEmpty(message = "Name should not be empty")
     private String firstName;
 
-
     @Column(name = "last_name")
     @NotEmpty(message = "lastName should not be empty")
     private String lastName;
+
+    @Column(name = "age")
+    private Long age;
 
     @Column(name = "email")
     private String email;
@@ -35,7 +37,7 @@ public class Person {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @Fetch(FetchMode.JOIN)
     @JoinTable(
-            name = "Person_Pole",
+            name = "Person_Role",
             joinColumns = @JoinColumn(name = "peson_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
@@ -82,6 +84,14 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
     }
 
     public String getPassword() {
