@@ -64,18 +64,21 @@
 <body style="background-color: #f8f9fa;">
 
 <nav class="navbar navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand ml-5" style="color: white; font-family: 'Roboto', sans-serif; font-size: 16px;">
+    <a class="navbar-brand ml-5" style="color: white; font-family: 'Roboto', sans-serif; font-size: 20px;">
         <span th:text="${personDetails.getPersson().email}" style="font-weight: bold;font-size: 18px"></span> with
         roles:
         <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-            <span th:if="${#authorization.expression('hasRole(''USER'')')}">Admin User</span>
-            <span th:unless="${#authorization.expression('hasRole(''USER'')')}">Admin</span>
+            <span th:if="${#authorization.expression('hasRole(''USER'')')} "
+                  style="font-weight: lighter">ADMIN USER</span>
+            <span th:unless="${#authorization.expression('hasRole(''USER'')')}">ADMIN</span>
         </span>
         <span th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
-            <span th:if="${#authorization.expression('hasRole(''USER'')')}">User</span>
+            <span th:if="${#authorization.expression('hasRole(''USER'')')}">USER</span>
         </span>
     </a>
-    <a class="text-secondary mr-5" th:href="@{'/logout'}">Logout</a>
+    <form th:action="@{/logout}" th:method="POST" class="d-inline">
+        <button class="btn btn-link text-secondary font-size-20" type="submit">Logout</button>
+    </form>
 </nav>
 
 <div class="menu">

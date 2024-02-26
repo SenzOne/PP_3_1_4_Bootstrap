@@ -65,7 +65,9 @@
             <span th:if="${#authorization.expression('hasRole(''USER'')')}">USER</span>
         </span>
     </a>
-    <a class="text-secondary mr-5" th:href="@{'/logout'}">Logout</a>
+    <form th:action="@{/logout}" th:method="POST" class="d-inline">
+        <button class="btn btn-link text-secondary font-size-20" type="submit">Logout</button>
+    </form>
 </nav>
 
 
@@ -200,7 +202,8 @@
                                                                 <label for="role"
                                                                        class="control-label font-weight-bold">Roles</label>
                                                                 <select class="form-control form-control-static"
-                                                                        multiple="multiple" name="role" id="role" style="height: 50px;">
+                                                                        multiple="multiple" name="role" id="role"
+                                                                        style="height: 50px;">
                                                                     <option value="1">Admin</option>
                                                                     <option value="2">User</option>
                                                                 </select>
@@ -270,8 +273,9 @@
                                                                 <label for="role2"
                                                                        class="control-label font-weight-bold">Roles</label>
                                                                 <select class="form-control form-control-static"
-                                                                        multiple="multiple" name="role" id="role2" style="height: 50px;"
-                                                                        disabled >
+                                                                        multiple="multiple" name="role" id="role2"
+                                                                        style="height: 50px;"
+                                                                        disabled>
                                                                     <option value="1">Admin</option>
                                                                     <option value="2">User</option>
                                                                 </select>
