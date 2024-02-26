@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.models.Person;
@@ -21,17 +22,20 @@ public class AdminServiceImpl implements AdminService {
 
     private final PeopleRepository peopleRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Конструктор сервиса.
      *
      * @param peopleRepository Репозиторий для работы с пользователями.
      * @param roleRepository   Репозиторий для работы с ролями.
+     * @param passwordEncoder
      */
     @Autowired
-    public AdminServiceImpl(PeopleRepository peopleRepository, RoleRepository roleRepository) {
+    public AdminServiceImpl(PeopleRepository peopleRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.peopleRepository = peopleRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -41,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public List<Person> getAllUsers() {
-        return peopleRepository.findAll();
+        return peopleRepository.findAllWithRoles();
     }
 
     /**
@@ -53,7 +57,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Person findUserByUserName(String firstName) {
-        Optional<Person> user = peopleRepository.findByFirstName(firstName);
+        Optional<Person> user = peopleRepository.findByFirstNameWithRoles(firstName);
         if (user.isEmpty())
             throw new UsernameNotFoundException("User " + firstName + " not found");
         return user.get();
@@ -98,7 +102,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Person findOneById(Long id) {
-        Optional<Person> user = peopleRepository.findById(id);
+        Optional<Person> user = peopleRepository.findByPersonIdWithRoles(id);
         if (user.isEmpty())
             throw new UsernameNotFoundException("User not found");
         return user.get();
@@ -106,7 +110,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Person findByEmail(String email) {
-        Optional<Person> user = peopleRepository.findByEmail(email);
+        Optional<Person> user = peopleRepository.findByEmailWithRoles(email);
         if (user.isEmpty())
             throw new UsernameNotFoundException("User not found");
         return user.get();
@@ -119,11 +123,9 @@ public class AdminServiceImpl implements AdminService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-        System.out.println();
         person.setRoles(roleSet);
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
         peopleRepository.save(person);
         System.out.println();
     }
-
 }
-

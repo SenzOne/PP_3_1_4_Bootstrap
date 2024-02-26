@@ -37,17 +37,17 @@ public class PeopleService {
      * @throws UsernameNotFoundException если пользователь не найден.
      */
     public Optional<Person> loadUserByUsername(String username) throws UsernameNotFoundException {
-        return peopleRepository.findByFirstName(username);
+        return peopleRepository.findByFirstNameWithRoles(username);
     }
 
-    /**
-     * Получает роли пользователя по его имени.
-     *
-     * @param username Имя пользователя.
-     * @return Множество ролей пользователя.
-     */
-    public Set<Role> getUserRoles(String username) {
-        Optional<Person> userOptional = peopleRepository.findByFirstName(username);
-        return userOptional.map(Person::getRoles).orElse(Collections.emptySet());
-    }
+//    /**
+//     * Получает роли пользователя по его имени.
+//     *
+//     * @param username Имя пользователя.
+//     * @return Множество ролей пользователя.
+//     */
+//    public Set<Role> getUserRoles(String username) {
+//        Optional<Person> userOptional = peopleRepository.findByFirstName(username);
+//        return userOptional.map(Person::getRoles).orElse(Collections.emptySet());
+//    }
 }

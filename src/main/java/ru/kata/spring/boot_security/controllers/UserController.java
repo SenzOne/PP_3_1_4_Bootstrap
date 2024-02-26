@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.security.PersonDetails;
 
 /**
@@ -29,11 +28,4 @@ public class UserController {
         model.addAttribute("personDetails", personDetails);
         return "/user/profile";
     }
-
-//    @GetMapping("")
-//    public String profile(Model model) {
-//        User user =  userService.findEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-//        model.addAttribute("user", user);
-//        return "/user/profile";
-//    }
 }
