@@ -40,14 +40,4 @@ public class PeopleService {
         return peopleRepository.findByFirstNameWithRoles(username);
     }
 
-//    /**
-//     * Получает роли пользователя по его имени.
-//     *
-//     * @param username Имя пользователя.
-//     * @return Множество ролей пользователя.
-//     */
-//    public Set<Role> getUserRoles(String username) {
-//        Optional<Person> userOptional = peopleRepository.findByFirstName(username);
-//        return userOptional.map(Person::getRoles).orElse(Collections.emptySet());
-//    }
 }

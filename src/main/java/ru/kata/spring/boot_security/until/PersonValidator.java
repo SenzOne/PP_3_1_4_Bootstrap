@@ -2,53 +2,47 @@ package ru.kata.spring.boot_security.until;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.kata.spring.boot_security.models.Person;
-import ru.kata.spring.boot_security.models.Role;
+import ru.kata.spring.boot_security.services.AdminService;
 import ru.kata.spring.boot_security.services.PeopleService;
 
-import java.util.List;
+import java.util.Optional;
 
-/**
- * Валидатор для объекта Person.
- */
 @Component
 public class PersonValidator implements Validator {
 
-    private final PeopleService peopleService;
+    private final AdminService adminService;
 
-    /**
-     * Конструктор валидатора.
-     *
-     * @param peopleService Сервис для работы с пользователями.
-     */
-    public PersonValidator(PeopleService peopleService) {
-        this.peopleService = peopleService;
+    public PersonValidator(PeopleService peopleService, AdminService adminService) {
+        this.adminService = adminService;
     }
 
-    /**
-     * Поддерживает ли валидатор данную класс.
-     *
-     * @param clazz Класс для проверки.
-     * @return true, если класс поддерживается, false в противном случае.
-     */
     @Override
     public boolean supports(Class<?> clazz) {
         return Person.class.equals(clazz);
     }
 
-    /**
-     * Выполняет валидацию объекта Person.
-     *
-     * @param target Объект для валидации.
-     * @param errors Объект для сохранения ошибок валидации.
-     */
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if (peopleService.loadUserByUsername(person.getFirstName()).isPresent()
-            && !peopleService.loadUserByUsername(person.getFirstName()).orElse(null).equals(target)) {
-            errors.rejectValue("firstName", "", "A user with that name already exists");
+
+
+        Optional<Person> existingPerson = adminService.findByEmail(person.getEmail());
+        if (existingPerson.isPresent() && !existingPerson.get().equals(person)) {
+            System.out.println();
+            errors.rejectValue("email", "", "A user with that email already exists");
+        }
+
+
+        if (person.getAge() != null && person.getAge() < 0) {
+            errors.rejectValue("age", "", "Age must be a non-negative number");
+        }
+
+
+        if (person.getPassword() != null && person.getPassword().length() <= 1) {
+            errors.rejectValue("password", "", "Password must be at least 1 characters long");
         }
     }
 }

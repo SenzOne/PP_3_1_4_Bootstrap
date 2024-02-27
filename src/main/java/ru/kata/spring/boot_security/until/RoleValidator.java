@@ -3,11 +3,13 @@ package ru.kata.spring.boot_security.until;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ru.kata.spring.boot_security.services.RoleService;
 
 import java.util.List;
 
 @Component
 public class RoleValidator implements Validator {
+
 
     @Override
     public boolean supports(Class<?> clazz) {

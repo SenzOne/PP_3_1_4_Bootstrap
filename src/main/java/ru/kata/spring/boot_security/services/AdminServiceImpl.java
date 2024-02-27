@@ -109,11 +109,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Person findByEmail(String email) {
-        Optional<Person> user = peopleRepository.findByEmailWithRoles(email);
-        if (user.isEmpty())
-            throw new UsernameNotFoundException("User not found");
-        return user.get();
+    public Optional<Person> findByEmail(String email) {
+        return  peopleRepository.findByEmailWithRoles(email);
     }
 
     public void create(Person person, List<String> roles) {
