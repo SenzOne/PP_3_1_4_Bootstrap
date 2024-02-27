@@ -73,14 +73,17 @@ public class AdminController {
 
     @PostMapping("/user/edit")
     public String update(@ModelAttribute("user") @Valid Person user, BindingResult bindingResult,
-                         @RequestParam(value = "role", required = false) @Valid List<String> role, BindingResult roleBindingResult) {
+                         @RequestParam(value = "role", required = false) @Valid List<String> role, BindingResult roleBindingResult,
+                         Model model) {
 
         System.out.println();
         personValidator.validate(user, bindingResult);
         roleValidator.validate(role, roleBindingResult);
 
         if (bindingResult.hasErrors() || roleBindingResult.hasErrors()) {
-            return "redirect:/admin/";
+            model.addAttribute("errorMessage", "Error in data validation");
+
+            return "admin/users";
         }
 
         adminService.updateUser(user, role);

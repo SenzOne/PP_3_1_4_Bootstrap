@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
      *
      * @param peopleRepository Репозиторий для работы с пользователями.
      * @param roleRepository   Репозиторий для работы с ролями.
-     * @param passwordEncoder
+     * @param passwordEncoder  кодировка пароля.
      */
     @Autowired
     public AdminServiceImpl(PeopleRepository peopleRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {

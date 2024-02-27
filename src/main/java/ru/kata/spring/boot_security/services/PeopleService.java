@@ -4,12 +4,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.models.Person;
-import ru.kata.spring.boot_security.models.Role;
 import ru.kata.spring.boot_security.repositories.PeopleRepository;
 
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Сервис для работы с пользователями.
