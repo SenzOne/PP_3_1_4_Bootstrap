@@ -40,8 +40,8 @@ public class MyDataInitializer {
             adminUser.setEmail("admin@mail");
             adminUser.setPassword(passwordEncoder.encode("admin"));
             registrationService.registerAdmin(adminUser);
-            System.out.println("Users created:");
-            System.out.println("Admin: username=admin, password=admin");
+            System.out.println("User created:");
+            System.out.println("Admin: email=admin@mail, password=admin");
         }
     }
 }
