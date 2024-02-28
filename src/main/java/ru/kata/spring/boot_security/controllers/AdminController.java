@@ -43,7 +43,7 @@ public class AdminController {
 
     @GetMapping()
     public String showAllUsers(Model model, Principal principal) {
-        Person person = adminService.findUserByUserName(principal.getName());
+        Person person = adminService.findByEmail(principal.getName()).get();
         model.addAttribute("currentUser", person);
         List<Person> listOfUsers = adminService.getAllUsers();
         model.addAttribute("listOfUsers", listOfUsers);
@@ -80,17 +80,17 @@ public class AdminController {
     /**
      * Обработка запроса на обновление данных пользователя.
      *
-     * @param user   Объект типа {@link Person}, представляющий пользователя.
+     * @param person   Объект типа {@link Person}, представляющий пользователя.
      * @param role   Список ролей пользователя.
      * @param model  Модель Spring, предоставляющая данные для отображения в представлении.
      * @return Строка с именем представления или перенаправление на страницу администратора.
      */
     @PostMapping("/user/edit")
-    public String update(@ModelAttribute("user") @Valid Person user,
+    public String update(@ModelAttribute("person") @Valid Person person,
                          @RequestParam(value = "role", required = false) @Valid List<String> role,
                          Model model) {
 
-        String allErrors = userDataValidationService.validateUserData(user, role, model);
+        String allErrors = userDataValidationService.validateUserData(person, role, model);
 
         // Если есть ошибки, вернуть перенаправление на страницу администратора
         if (!allErrors.isEmpty()) {
@@ -98,7 +98,7 @@ public class AdminController {
         }
 
         // Обновление данных пользователя и перенаправление на страницу администратора
-        adminService.updateUser(user, role);
+        adminService.updateUser(person, role);
         return "redirect:/admin";
     }
 

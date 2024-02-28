@@ -18,7 +18,7 @@
    <script>
        jQuery(document).ready(function () {
            // Показываем тост с задержкой 3000 мс (3 секунды)
-           jQuery('.toast').toast({ delay: 3000 }).toast('show');
+           jQuery('.toast').toast({delay: 3000}).toast('show');
 
            // Создаем предупреждающее сообщение
            const alertPlaceholder = jQuery('#liveAlertPlaceholder');
@@ -157,10 +157,11 @@
                <h4> All users</h4>
             </div>
 
-            <div class="table-container" style="border: 1px solid #ccc;  background-color: #fff; padding: 15px; overflow-y: auto;">
+            <div class="table-container"
+                 style="border: 1px solid #ccc;  background-color: #fff; padding: 15px; overflow-y: auto;">
                <table class="table table-hover table-striped"
                       style="background-color: white; width: 100%; font-size: 14px;">
-               <thead>
+                  <thead>
                   <tr>
                      <th class="col-constructor-name">ID</th>
                      <th class="col-constructor-name">Name</th>
@@ -173,26 +174,26 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr th:each="user : ${listOfUsers}">
+                  <tr th:each="person : ${listOfUsers}">
                      <td>
-                        <a th:text="${user.getId()}">Id</a></td>
+                        <a th:text="${person.getId()}">Id</a></td>
                      <td>
-                        <a th:text="${user.getFirstName()}">Name</a>
+                        <a th:text="${person.getFirstName()}">Name</a>
                      </td>
-                     <td th:text="${user.getLastName()}">Last Name</td>
-                     <td th:text="${user.getAge()}">Age</td>
-                     <td th:text="${user.getEmail()}">Email</td>
+                     <td th:text="${person.getLastName()}">Last Name</td>
+                     <td th:text="${person.getAge()}">Age</td>
+                     <td th:text="${person.getEmail()}">Email</td>
                      <td>
-                                    <span th:each="role, iterStat : ${user.getRoles()}">
+                                    <span th:each="role, iterStat : ${person.getRoles()}">
                                         <span th:text="${role.getNameOfRole().substring(5)}"></span>
                                         <span th:if="${!iterStat.last}"></span>
                                     </span>
                      </td>
                      <td>
                         <button class="btn btn-info" data-toggle="modal"
-                                th:data-target="${'#edit'+ user.getId()}">Edit
+                                th:data-target="${'#edit'+ person.getId()}">Edit
                         </button>
-                        <div th:id="${'edit' + user.getId()}" class="modal">
+                        <div th:id="${'edit' + person.getId()}" class="modal">
                            <form role="form" class="form-horizontal" th:method="POST"
                                  th:action="@{/admin/user/edit}">
                               <div class="modal-dialog modal-md">
@@ -209,47 +210,58 @@
                                              <div class="form-group text-center">
                                                 <label for="id" class="control-label font-weight-bold">ID</label>
                                                 <input type="text" class="form-control"
-                                                       th:value="${user.id}" id="id" name="id"
+                                                       th:value="${person.id}" id="id" name="id"
                                                        readonly/>
-                                             </div>
-                                             <div class="form-group text-center">
-                                                <label for="name"
-                                                       class="control-label font-weight-bold">Name</label>
-                                                <input type="text" class="form-control"
-                                                       th:value="${user.firstName}" name="firstName"
-                                                       id="name"/>
-                                             </div>
-                                             <div class="form-group text-center">
-                                                <label for="lastName"
-                                                       class="control-label font-weight-bold">Last
-                                                   Name</label>
-                                                <input type="text" class="form-control"
-                                                       th:value="${user.lastName}" name="lastName"
-                                                       id="lastName"/>
-                                             </div>
-                                             <div class="form-group text-center">
-                                                <label for="age" class="control-label font-weight-bold">Age</label>
-                                                <input type="number" class="form-control"
-                                                       th:value="${user.age}" name="age" id="age"/>
                                              </div>
                                              <div class="form-group text-center">
                                                 <label for="email"
                                                        class="control-label font-weight-bold">Email</label>
                                                 <input type="text" class="form-control"
-                                                       th:value="${user.email}" name="email"
+                                                       th:value="${person.email}" name="email"
                                                        id="email"/>
                                              </div>
+
                                              <div class="form-group text-center">
-                                                <!--                                                                <label for="role"-->
-                                                <!--                                                                       class="control-label font-weight-bold">Roles</label>-->
+                                                <label for="name"
+                                                       class="control-label font-weight-bold">Name</label>
+                                                <input type="text" class="form-control"
+                                                       th:value="${person.firstName}" name="firstName"
+                                                       id="name"/>
+                                             </div>
+
+<!--                                             <div class="form-group text-center">-->
+<!--                                                <label for="password"-->
+<!--                                                       class="control-label font-weight-bold">Password</label>-->
+<!--                                                <input type="password" class="form-control" th:field="${person.password}"-->
+<!--                                                       id="password"/>-->
+
+<!--                                             </div>-->
+
+                                             <div class="form-group text-center">
+                                                <label for="password" class="control-label font-weight-bold">Password</label>
+                                                <input type="password" class="form-control" th:field="${person.password}" id="password" th:type="password"/>
+                                             </div>
+
+                                             <div class="form-group text-center">
+                                                <label for="lastName"
+                                                       class="control-label font-weight-bold">Last
+                                                   Name</label>
+                                                <input type="text" class="form-control"
+                                                       th:value="${person.lastName}" name="lastName"
+                                                       id="lastName"/>
+                                             </div>
+                                             <div class="form-group text-center">
+                                                <label for="age" class="control-label font-weight-bold">Age</label>
+                                                <input type="number" class="form-control"
+                                                       th:value="${person.age}" name="age" id="age"/>
+                                             </div>
+                                             <div class="form-group text-center">
                                                 <div class="form-group text-center">
                                                    <label for="role"
                                                           class="control-label font-weight-bold">Roles</label>
                                                    <select class="form-control form-control-static"
                                                            multiple="multiple" name="role" id="role"
                                                            style="height: 50px;">
-                                                      <!--                                    <option value="1" th:selected="${user.getRoles().contains('ROLE_ADMIN')}">Admin</option>-->
-                                                      <!--                                    <option value="2" th:selected="${user.getRoles().contains('ROLE_USER')}">User</option>-->
                                                       <option value="2">User</option>
                                                       <option value="1">Admin</option>
                                                    </select>
@@ -277,9 +289,9 @@
                      </td>
                      <td>
                         <button class="btn btn-danger" data-toggle="modal"
-                                th:data-target="${'#delete'+ user.getId()}">Delete
+                                th:data-target="${'#delete'+ person.getId()}">Delete
                         </button>
-                        <div th:id="${'delete' + user.getId()}" class="modal">
+                        <div th:id="${'delete' + person.getId()}" class="modal">
                            <form role="form" class="form-horizontal" th:method="POST"
                                  th:action="@{/admin/user/delete}">
                               <div class="modal-dialog modal-md">
@@ -296,28 +308,28 @@
                                              <div class="form-group text-center">
                                                 <label for="id2" class="control-label font-weight-bold">ID</label>
                                                 <input type="text" class="form-control"
-                                                       th:value="${user.id}" id="id2" name="id"
+                                                       th:value="${person.id}" id="id2" name="id"
                                                        readonly/>
                                              </div>
                                              <div class="form-group text-center">
                                                 <label for="name2"
                                                        class="control-label font-weight-bold">Name</label>
                                                 <input type="text" class="form-control"
-                                                       th:value="${user.firstName}" name="firstName"
+                                                       th:value="${person.firstName}" name="firstName"
                                                        id="name2" readonly/>
                                              </div>
                                              <div class="form-group text-center">
                                                 <label for="age2"
                                                        class="control-label font-weight-bold">Age</label>
                                                 <input type="number" class="form-control"
-                                                       th:value="${user.age}" name="age" id="age2"
+                                                       th:value="${person.age}" name="age" id="age2"
                                                        readonly/>
                                              </div>
                                              <div class="form-group text-center">
                                                 <label for="email2"
                                                        class="control-label font-weight-bold">Email</label>
                                                 <input type="text" class="form-control"
-                                                       th:value="${user.email}" name="email" id="email2"
+                                                       th:value="${person.email}" name="email" id="email2"
                                                        readonly/>
                                              </div>
                                              <div class="form-group text-center">
@@ -368,12 +380,10 @@
 
       <!--      <div th:if="${!allErrors.isEmpty()}" style="color: red">-->
 
-<!--      <div class="alert alert-warning alert-dismissible" role="alert">-->
-<!--         Простое warning уведомление с <a href="#" class="alert-link">примером ссылки</a>.-->
-<!--         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
-<!--      </div>-->
-
-
+      <!--      <div class="alert alert-warning alert-dismissible" role="alert">-->
+      <!--         Простое warning уведомление с <a href="#" class="alert-link">примером ссылки</a>.-->
+      <!--         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+      <!--      </div>-->
 
 
       <!--      <div class="alert alert-danger d-flex align-items-center" role="alert">-->

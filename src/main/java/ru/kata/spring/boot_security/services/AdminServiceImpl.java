@@ -51,15 +51,15 @@ public class AdminServiceImpl implements AdminService {
     /**
      * Находит пользователя по имени.
      *
-     * @param firstName Имя пользователя.
+     * @param name Имя пользователя.
      * @return Объект Person, представляющий пользователя.
      * @throws UsernameNotFoundException если пользователь не найден.
      */
     @Override
-    public Person findUserByUserName(String firstName) {
-        Optional<Person> user = peopleRepository.findByFirstNameWithRoles(firstName);
+    public Person findUserByFirstName(String name) {
+        Optional<Person> user = peopleRepository.findByFirstNameWithRoles(name);
         if (user.isEmpty())
-            throw new UsernameNotFoundException("User " + firstName + " not found");
+            throw new UsernameNotFoundException("User " + name + " not found");
         return user.get();
     }
 
@@ -115,7 +115,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateUser(Person person, List<String> roles) {
         Person beforeUpdate = peopleRepository.getById(person.getId());
-        person.setPassword(beforeUpdate.getPassword());
+
+        if (beforeUpdate.getPassword().equals(person.getPassword())) {
+            person.setPassword(beforeUpdate.getPassword());
+        }
         Set<Role> roleSet = roles.stream()
                 .map(Long::valueOf)
                 .map(roleRepository::findById)

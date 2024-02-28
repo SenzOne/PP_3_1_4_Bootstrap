@@ -30,7 +30,7 @@ import java.util.Optional;
 public interface AdminService {
     List<Person> getAllUsers();
 
-    Person findUserByUserName(String firstName);
+    Person findUserByFirstName(String firstName);
 
     void updateUser(Person person, List<String> roles);
 
