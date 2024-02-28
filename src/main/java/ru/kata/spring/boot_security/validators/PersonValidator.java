@@ -39,10 +39,6 @@ public class PersonValidator implements Validator {
         }
 
 
-//        if (person.getPassword() != null && person.getPassword().length() <= 1) {
-//            errors.rejectValue("password", "short.Password", "Password must be at least 1 characters long");
-//        }
-
         if (person.getFirstName() == null || person.getFirstName().trim().isEmpty()) {
             errors.rejectValue("firstName", "NotEmpty", "FirstName should not be empty");
         }

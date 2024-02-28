@@ -37,14 +37,6 @@
        });
    </script>
 
-
-   <!--   <script>-->
-   <!--       $(document).ready(function () {-->
-   <!--           $(".alert-link").click(function () {-->
-   <!--               $(".alert").alert("close");-->
-   <!--           });-->
-   <!--       });-->
-   <!--   </script>-->
    <style>
        .menu {
            background-color: white;
@@ -358,34 +350,6 @@
          <div class="tab-pane fade" id="newuser" role="tabpanel" aria-labelledby="newuser-tab"
               th:include="/admin/new :: new"></div>
       </div>
-      <!--       Добавьте содержимое для дополнительных вкладок по мере необходимости -->
-      <!--        </div>-->
-      <!--        <div class="alert alert-success" role="alert" th:if="${allErrors.hashCode()}">-->
-      <!--          <p th:text="allErrors"></p>-->
-      <!--        </div>-->
-      <!--          <div class="alert alert-danger d-flex align-items-center" role="alert">-->
-      <!--            &lt;!&ndash;    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>&ndash;&gt;-->
-      <!--            <div>-->
-      <!--              <p th:text="${allErrors}"></p>-->
-      <!--            </div>-->
-      <!--          </div>-->
-
-
-      <!--      <div th:if="${!allErrors.isEmpty()}" style="color: red">-->
-
-      <!--      <div class="alert alert-warning alert-dismissible" role="alert">-->
-      <!--         Простое warning уведомление с <a href="#" class="alert-link">примером ссылки</a>.-->
-      <!--         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
-      <!--      </div>-->
-
-
-      <!--      <div class="alert alert-danger d-flex align-items-center" role="alert">-->
-      <!--         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>-->
-      <!--         <div>-->
-      <!--            Пример уведомления об опасности с иконкой-->
-      <!--         </div>-->
-      <!--      </div>-->
-
       <div th:if="${!allErrors.isEmpty()}" style="color: red">
          <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <div th:each="err : ${allErrors}"></div>

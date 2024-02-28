@@ -133,6 +133,7 @@ public class AdminServiceImpl implements AdminService {
                 .map(Optional::get)
                 .collect(Collectors.toSet());
         person.setRoles(roleSet);
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
         peopleRepository.save(person);
     }
 }
