@@ -3,12 +3,12 @@ package ru.kata.spring.boot_security.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.AdminService;
 import ru.kata.spring.boot_security.services.RoleService;
+import ru.kata.spring.boot_security.until.MyDataValidator;
 import ru.kata.spring.boot_security.until.PersonValidator;
 import ru.kata.spring.boot_security.until.RoleValidator;
 
@@ -27,14 +27,17 @@ public class AdminController {
     private final RoleService roleService;
     private final PersonValidator personValidator;
     private final RoleValidator roleValidator;
+    private final MyDataValidator myDataValidator;
+
 
 
     @Autowired
-    public AdminController(AdminService adminService, RoleService roleService, PersonValidator personValidator, RoleValidator roleValidator) {
+    public AdminController(AdminService adminService, RoleService roleService, PersonValidator personValidator, RoleValidator roleValidator, MyDataValidator myDataValidator) {
         this.adminService = adminService;
         this.roleService = roleService;
         this.personValidator = personValidator;
         this.roleValidator = roleValidator;
+        this.myDataValidator = myDataValidator;
     }
 
 
@@ -45,6 +48,7 @@ public class AdminController {
         List<Person> listOfUsers = adminService.getAllUsers();
         model.addAttribute("listOfUsers", listOfUsers);
         model.addAttribute("person", new Person());
+        model.addAttribute("allErrors", myDataValidator.getAllErrorsAsString());
         return "admin/users";
     }
 
@@ -76,14 +80,19 @@ public class AdminController {
                          @RequestParam(value = "role", required = false) @Valid List<String> role, BindingResult roleBindingResult,
                          Model model) {
 
-        System.out.println();
+        myDataValidator.dataClean();
         personValidator.validate(user, bindingResult);
         roleValidator.validate(role, roleBindingResult);
 
-        if (bindingResult.hasErrors() || roleBindingResult.hasErrors()) {
-            model.addAttribute("errorMessage", "Error in data validation");
+        myDataValidator.validate(bindingResult);
+        myDataValidator.validate(roleBindingResult);
 
-            return "admin/users";
+
+        String allErrors = myDataValidator.getAllErrorsAsString();
+
+        if (!allErrors.isEmpty()) {
+            model.addAttribute("allErrors", allErrors);
+            return "redirect:/admin";
         }
 
         adminService.updateUser(user, role);
