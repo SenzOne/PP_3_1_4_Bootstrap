@@ -81,7 +81,7 @@
        }
 
        .table-container {
-           max-height: 420px; /* Замените это значение на желаемую максимальную высоту */
+           max-height: 1000px; /* Замените это значение на желаемую максимальную высоту */
            overflow-y: auto; /* Добавляет вертикальную прокрутку, если контент превышает высоту */
        }
 
@@ -385,6 +385,7 @@
 
       <div th:if="${!allErrors.isEmpty()}" style="color: red">
          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div th:each="err : ${allErrors}"></div>
             <p th:text="${allErrors}">ERRR MSG</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                <span aria-hidden="true">&times;</span>

@@ -20,7 +20,10 @@ public class MyDataInitializer {
     private final RegistrationService registrationService;
 
     @Autowired
-    public MyDataInitializer(AdminService adminService, RoleService roleService, PasswordEncoder passwordEncoder, RegistrationService registrationService) {
+    public MyDataInitializer(AdminService adminService,
+                             RoleService roleService,
+                             PasswordEncoder passwordEncoder,
+                             RegistrationService registrationService) {
         this.adminService = adminService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;

@@ -17,11 +17,11 @@ public class Person {
     private Long id;
 
     @Column(name = "name")
-    @NotEmpty(message = "Name should not be empty")
+//    @NotEmpty(message = "Name should not be empty")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotEmpty(message = "lastName should not be empty")
+//    @NotEmpty(message = "lastName should not be empty")
     private String lastName;
 
     @Column(name = "age")

@@ -63,25 +63,6 @@ public class AdminServiceImpl implements AdminService {
         return user.get();
     }
 
-    /**
-     * Обновляет информацию о пользователе и его ролях.
-     *
-     * @param person Обновленный объект Person.
-     * @param roles  Список строковых идентификаторов ролей.
-     */
-    @Override
-    public void updateUser(Person person, List<String> roles) {
-        Person beforeUpdate = peopleRepository.getById(person.getId());
-        person.setPassword(beforeUpdate.getPassword());
-        Set<Role> roleSet = roles.stream()
-                .map(Long::valueOf)
-                .map(roleRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-        person.setRoles(roleSet);
-        peopleRepository.save(person);
-    }
 
     /**
      * Удаляет пользователя по ID.
@@ -123,6 +104,25 @@ public class AdminServiceImpl implements AdminService {
         person.setRoles(roleSet);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         peopleRepository.save(person);
-        System.out.println();
+    }
+
+    /**
+     * Обновляет информацию о пользователе и его ролях.
+     *
+     * @param person Обновленный объект Person.
+     * @param roles  Список строковых идентификаторов ролей.
+     */
+    @Override
+    public void updateUser(Person person, List<String> roles) {
+        Person beforeUpdate = peopleRepository.getById(person.getId());
+        person.setPassword(beforeUpdate.getPassword());
+        Set<Role> roleSet = roles.stream()
+                .map(Long::valueOf)
+                .map(roleRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+        person.setRoles(roleSet);
+        peopleRepository.save(person);
     }
 }

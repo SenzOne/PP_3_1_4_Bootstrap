@@ -12,6 +12,7 @@ public class MyDataValidator {
 
     private List<BindingResult> bindingResultList = new ArrayList<>();
     private String errors = "";
+//    private List<String> errors = new ArrayList<>();
 
     public void validate(BindingResult bindingResult) {
         bindingResultList.add(bindingResult);
@@ -26,6 +27,7 @@ public class MyDataValidator {
                 String errorMessage = error.getDefaultMessage();
 
                 errorString.append(fieldName.toUpperCase()).append(": ").append(errorMessage).append("\n");
+
             }
         }
         errors = errorString.toString();
