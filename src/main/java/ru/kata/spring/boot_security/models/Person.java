@@ -4,7 +4,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,7 +37,7 @@ public class Person {
     @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "Person_Role",
-            joinColumns = @JoinColumn(name = "peson_id"),
+            joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;

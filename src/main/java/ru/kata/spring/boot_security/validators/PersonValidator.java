@@ -1,14 +1,11 @@
-package ru.kata.spring.boot_security.until;
+package ru.kata.spring.boot_security.validators;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.AdminService;
-import ru.kata.spring.boot_security.services.PeopleService;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component

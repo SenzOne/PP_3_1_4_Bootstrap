@@ -3,14 +3,13 @@ package ru.kata.spring.boot_security.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.AdminService;
-import ru.kata.spring.boot_security.until.MyDataValidator;
-import ru.kata.spring.boot_security.until.PersonValidator;
-import ru.kata.spring.boot_security.until.RoleValidator;
-import ru.kata.spring.boot_security.until.UserDataValidationService;
+import ru.kata.spring.boot_security.validators.MyDataValidator;
+import ru.kata.spring.boot_security.validators.PersonValidator;
+import ru.kata.spring.boot_security.validators.RoleValidator;
+import ru.kata.spring.boot_security.services.UserDataValidationService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -24,18 +23,13 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
-    private final PersonValidator personValidator;
-    private final RoleValidator roleValidator;
     private final MyDataValidator myDataValidator;
     private final UserDataValidationService userDataValidationService;
 
 
-
     @Autowired
-    public AdminController(AdminService adminService, PersonValidator personValidator, RoleValidator roleValidator, MyDataValidator myDataValidator, UserDataValidationService userDataValidationService) {
+    public AdminController(AdminService adminService, MyDataValidator myDataValidator, UserDataValidationService userDataValidationService) {
         this.adminService = adminService;
-        this.personValidator = personValidator;
-        this.roleValidator = roleValidator;
         this.myDataValidator = myDataValidator;
         this.userDataValidationService = userDataValidationService;
     }
@@ -111,4 +105,3 @@ public class AdminController {
         return "redirect:/admin";
     }
 }
-

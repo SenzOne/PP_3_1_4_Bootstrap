@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.until;
+package ru.kata.spring.boot_security.validators;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -12,7 +12,6 @@ public class MyDataValidator {
 
     private List<BindingResult> bindingResultList = new ArrayList<>();
     private String errors = "";
-//    private List<String> errors = new ArrayList<>();
 
     public void validate(BindingResult bindingResult) {
         bindingResultList.add(bindingResult);
