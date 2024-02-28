@@ -63,6 +63,10 @@ public class AdminServiceImpl implements AdminService {
         return user.get();
     }
 
+    public Optional<Person> doesPersonExist(String email) {
+        return peopleRepository.findByEmailWithRoles(email);
+    }
+
 
     /**
      * Удаляет пользователя по ID.
@@ -90,8 +94,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Optional<Person> findByEmail(String email) {
-        return  peopleRepository.findByEmailWithRoles(email);
+    public Person findByEmail(String email) {
+        Optional<Person> user = peopleRepository.findByEmailWithRoles(email);
+        if (user.isEmpty())
+            throw new UsernameNotFoundException("User not found");
+        return user.get();
     }
 
     public void create(Person person, List<String> roles) {
@@ -116,8 +123,8 @@ public class AdminServiceImpl implements AdminService {
     public void updateUser(Person person, List<String> roles) {
         Person beforeUpdate = peopleRepository.getById(person.getId());
 
-        if (beforeUpdate.getPassword().equals(person.getPassword())) {
-            person.setPassword(beforeUpdate.getPassword());
+        if (person.getPassword().isEmpty()){
+            person.setPassword(passwordEncoder.encode(beforeUpdate.getPassword()));
         }
         Set<Role> roleSet = roles.stream()
                 .map(Long::valueOf)

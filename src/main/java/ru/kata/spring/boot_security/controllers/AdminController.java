@@ -43,7 +43,7 @@ public class AdminController {
 
     @GetMapping()
     public String showAllUsers(Model model, Principal principal) {
-        Person person = adminService.findByEmail(principal.getName()).get();
+        Person person = adminService.findByEmail(principal.getName());
         model.addAttribute("currentUser", person);
         List<Person> listOfUsers = adminService.getAllUsers();
         model.addAttribute("listOfUsers", listOfUsers);
@@ -90,7 +90,10 @@ public class AdminController {
                          @RequestParam(value = "role", required = false) @Valid List<String> role,
                          Model model) {
 
+        System.out.println(person.getPassword());
+        System.out.println(person.getEmail());
         String allErrors = userDataValidationService.validateUserData(person, role, model);
+        System.out.println();
 
         // Если есть ошибки, вернуть перенаправление на страницу администратора
         if (!allErrors.isEmpty()) {

@@ -237,10 +237,21 @@
 
 <!--                                             </div>-->
 
+<!--                                             <div class="form-group text-center">-->
+<!--                                                <label for="password" class="control-label font-weight-bold">Password</label>-->
+<!--                                                <input type="password" class="form-control" disabled="true" th:value="${person.password}" th:name="password" id="password"/>-->
+<!--                                             </div>-->
+
+<!--                                             <div class="form-group text-center">-->
+<!--                                                <label for="password" class="control-label font-weight-bold">Password</label>-->
+<!--                                                <input type="password" class="form-control" th:field="${person.password}" name="password" id="password" th:type="password"/>-->
+<!--                                             </div>-->
+
                                              <div class="form-group text-center">
                                                 <label for="password" class="control-label font-weight-bold">Password</label>
-                                                <input type="password" class="form-control" th:field="${person.password}" id="password" th:type="password"/>
+                                                <input type="password" class="form-control" th:field="${person.password}" th:value="${person.password != null} ? ${person.password} : ''" name="password" id="password" th:type="password"/>
                                              </div>
+
 
                                              <div class="form-group text-center">
                                                 <label for="lastName"

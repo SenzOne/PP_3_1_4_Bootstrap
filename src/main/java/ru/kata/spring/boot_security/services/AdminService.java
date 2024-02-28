@@ -38,7 +38,9 @@ public interface AdminService {
 
     Person findOneById(Long id);
 
-    Optional<Person> findByEmail(String email);
+    Person findByEmail(String email);
 
     void create(Person person, List<String> roles);
+
+    Optional<Person> doesPersonExist(String emil);
 }

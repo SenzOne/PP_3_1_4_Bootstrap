@@ -30,8 +30,8 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
 
-        Optional<Person> existingPerson = adminService.findByEmail(person.getEmail());
-        if (existingPerson.isPresent() && person.getId() != existingPerson.get().getId()) {
+        Optional<Person> existingPerson = adminService.doesPersonExist(person.getEmail());
+        if (existingPerson.isPresent()  && person.getId() != existingPerson.get().getId()) {
             String errMsg = String.format("Email %s is not unique", existingPerson.get().getEmail());
             errors.rejectValue("email", "duplicate.email", errMsg);
         }
@@ -42,9 +42,9 @@ public class PersonValidator implements Validator {
         }
 
 
-        if (person.getPassword() != null && person.getPassword().length() <= 1) {
-            errors.rejectValue("password", "short.Password", "Password must be at least 1 characters long");
-        }
+//        if (person.getPassword() != null && person.getPassword().length() <= 1) {
+//            errors.rejectValue("password", "short.Password", "Password must be at least 1 characters long");
+//        }
 
         if (person.getFirstName() == null || person.getFirstName().trim().isEmpty()) {
             errors.rejectValue("firstName", "NotEmpty", "FirstName should not be empty");
