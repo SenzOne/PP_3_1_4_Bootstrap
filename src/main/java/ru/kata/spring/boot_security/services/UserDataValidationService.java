@@ -1,10 +1,13 @@
-package ru.kata.spring.boot_security.until;
+package ru.kata.spring.boot_security.services;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import ru.kata.spring.boot_security.models.Person;
+import ru.kata.spring.boot_security.validators.MyDataValidator;
+import ru.kata.spring.boot_security.validators.PersonValidator;
+import ru.kata.spring.boot_security.validators.RoleValidator;
 
 import java.util.List;
 
