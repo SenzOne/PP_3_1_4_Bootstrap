@@ -3,16 +3,12 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
    <meta charset="UTF-8">
-   <title>HOME</title>
+   <title>ADMIN PANEL</title>
 
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-   <!-- jQuery -->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-           integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-           crossorigin="anonymous"></script>
 
    <!-- Bootstrap JS -->
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -21,17 +17,35 @@
 
    <script>
        jQuery(document).ready(function () {
+           // Показываем тост с задержкой 3000 мс (3 секунды)
            jQuery('.toast').toast({ delay: 3000 }).toast('show');
+
+           // Создаем предупреждающее сообщение
+           const alertPlaceholder = jQuery('#liveAlertPlaceholder');
+           const alertTrigger = jQuery('#liveAlertBtn');
+
+           function alert(message, type) {
+               const wrapper = jQuery('<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button></div>');
+               alertPlaceholder.append(wrapper);
+           }
+
+           if (alertTrigger) {
+               alertTrigger.on('click', function () {
+                   // Показываем предупреждающее сообщение
+                   alert('Отлично, вы запустили это предупреждающее сообщение!', 'success');
+               });
+           }
        });
    </script>
 
-<!--   <script>-->
-<!--       $(document).ready(function () {-->
-<!--           $(".alert-link").click(function () {-->
-<!--               $(".alert").alert("close");-->
-<!--           });-->
-<!--       });-->
-<!--   </script>-->
+
+   <!--   <script>-->
+   <!--       $(document).ready(function () {-->
+   <!--           $(".alert-link").click(function () {-->
+   <!--               $(".alert").alert("close");-->
+   <!--           });-->
+   <!--       });-->
+   <!--   </script>-->
    <style>
        .menu {
            background-color: white;
@@ -66,6 +80,11 @@
            border-radius: 4px 4px 4px 4px
        }
 
+       .table-container {
+           max-height: 420px; /* Замените это значение на желаемую максимальную высоту */
+           overflow-y: auto; /* Добавляет вертикальную прокрутку, если контент превышает высоту */
+       }
+
        .menu-btn:hover {
            background-color: #057AFB; /* Цвет фона при наведении */
            color: white; /* Цвет текста при наведении */
@@ -90,6 +109,8 @@
             <span th:if="${#authorization.expression('hasRole(''USER'')')}">USER</span>
         </span>
    </a>
+   <div>
+   </div>
    <form th:action="@{/logout}" th:method="POST" class="d-inline">
       <button class="btn btn-link text-secondary font-size-20" type="submit">Logout</button>
    </form>
@@ -135,10 +156,11 @@
             <div style="margin-left: 20px">
                <h4> All users</h4>
             </div>
-            <div class="table-container" style="border: 1px solid #ccc;  background-color: #fff; padding: 15px">
+
+            <div class="table-container" style="border: 1px solid #ccc;  background-color: #fff; padding: 15px; overflow-y: auto;">
                <table class="table table-hover table-striped"
                       style="background-color: white; width: 100%; font-size: 14px;">
-                  <thead>
+               <thead>
                   <tr>
                      <th class="col-constructor-name">ID</th>
                      <th class="col-constructor-name">Name</th>
@@ -331,28 +353,42 @@
          <div class="tab-pane fade" id="newuser" role="tabpanel" aria-labelledby="newuser-tab"
               th:include="/admin/new :: new"></div>
       </div>
-<!--       Добавьте содержимое для дополнительных вкладок по мере необходимости -->
-<!--        </div>-->
-<!--        <div class="alert alert-success" role="alert" th:if="${allErrors.hashCode()}">-->
-<!--          <p th:text="allErrors"></p>-->
-<!--        </div>-->
-<!--          <div class="alert alert-danger d-flex align-items-center" role="alert">-->
-<!--            &lt;!&ndash;    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>&ndash;&gt;-->
-<!--            <div>-->
-<!--              <p th:text="${allErrors}"></p>-->
-<!--            </div>-->
-<!--          </div>-->
+      <!--       Добавьте содержимое для дополнительных вкладок по мере необходимости -->
+      <!--        </div>-->
+      <!--        <div class="alert alert-success" role="alert" th:if="${allErrors.hashCode()}">-->
+      <!--          <p th:text="allErrors"></p>-->
+      <!--        </div>-->
+      <!--          <div class="alert alert-danger d-flex align-items-center" role="alert">-->
+      <!--            &lt;!&ndash;    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>&ndash;&gt;-->
+      <!--            <div>-->
+      <!--              <p th:text="${allErrors}"></p>-->
+      <!--            </div>-->
+      <!--          </div>-->
 
 
+      <!--      <div th:if="${!allErrors.isEmpty()}" style="color: red">-->
+
+<!--      <div class="alert alert-warning alert-dismissible" role="alert">-->
+<!--         Простое warning уведомление с <a href="#" class="alert-link">примером ссылки</a>.-->
+<!--         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--      </div>-->
+
+
+
+
+      <!--      <div class="alert alert-danger d-flex align-items-center" role="alert">-->
+      <!--         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>-->
+      <!--         <div>-->
+      <!--            Пример уведомления об опасности с иконкой-->
+      <!--         </div>-->
+      <!--      </div>-->
 
       <div th:if="${!allErrors.isEmpty()}" style="color: red">
-         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" >
-            <div class="toast-header">
-               <strong class="me-auto">Error</strong>
-            </div>
-            <div class="toast-body">
-               <p th:text="${allErrors}">ERRR MSG</p>
-            </div>
+         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p th:text="${allErrors}">ERRR MSG</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
          </div>
       </div>
    </div>

@@ -16,7 +16,7 @@ public class PersonValidator implements Validator {
 
     private final AdminService adminService;
 
-    public PersonValidator(PeopleService peopleService, AdminService adminService) {
+    public PersonValidator(AdminService adminService) {
         this.adminService = adminService;
     }
 
@@ -31,9 +31,9 @@ public class PersonValidator implements Validator {
 
 
         Optional<Person> existingPerson = adminService.findByEmail(person.getEmail());
-        if (existingPerson.isEmpty() || ((Person) target).getId() != existingPerson.get().getId()) {
-            System.out.println();
-            errors.rejectValue("email", "duplicate.email", "A user with that email already exists");
+        if (existingPerson.isPresent() && ((Person) target).getId() != existingPerson.get().getId()) {
+            String errMsg = String.format("Email %s is not unique", existingPerson.get().getEmail());
+            errors.rejectValue("email", "duplicate.email", errMsg);
         }
 
 

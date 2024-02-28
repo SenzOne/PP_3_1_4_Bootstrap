@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
@@ -24,7 +25,6 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
-    private final RoleService roleService;
     private final PersonValidator personValidator;
     private final RoleValidator roleValidator;
     private final MyDataValidator myDataValidator;
@@ -32,9 +32,8 @@ public class AdminController {
 
 
     @Autowired
-    public AdminController(AdminService adminService, RoleService roleService, PersonValidator personValidator, RoleValidator roleValidator, MyDataValidator myDataValidator) {
+    public AdminController(AdminService adminService,  PersonValidator personValidator, RoleValidator roleValidator, MyDataValidator myDataValidator) {
         this.adminService = adminService;
-        this.roleService = roleService;
         this.personValidator = personValidator;
         this.roleValidator = roleValidator;
         this.myDataValidator = myDataValidator;
@@ -76,17 +75,20 @@ public class AdminController {
 
 
     @PostMapping("/user/edit")
-    public String update(@ModelAttribute("user") @Valid Person user, BindingResult bindingResult,
-                         @RequestParam(value = "role", required = false) @Valid List<String> role, BindingResult roleBindingResult,
+    public String update(@ModelAttribute("user") @Valid Person user,
+                         @RequestParam(value = "role", required = false) @Valid List<String> role,
                          Model model) {
 
-        myDataValidator.dataClean();
-        personValidator.validate(user, bindingResult);
+        BindingResult userBindingResult = new BeanPropertyBindingResult(user, "user");
+        BindingResult roleBindingResult = new BeanPropertyBindingResult(role, "role");
+
+        personValidator.validate(user, userBindingResult);
         roleValidator.validate(role, roleBindingResult);
 
-        myDataValidator.validate(bindingResult);
-        myDataValidator.validate(roleBindingResult);
+        myDataValidator.dataClean();
 
+        myDataValidator.validate(userBindingResult);
+        myDataValidator.validate(roleBindingResult);
 
         String allErrors = myDataValidator.getAllErrorsAsString();
 
@@ -98,6 +100,7 @@ public class AdminController {
         adminService.updateUser(user, role);
         return "redirect:/admin";
     }
+
 
 
     @PostMapping("/user/delete")

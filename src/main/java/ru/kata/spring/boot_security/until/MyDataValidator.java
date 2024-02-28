@@ -25,7 +25,7 @@ public class MyDataValidator {
                 String fieldName = error.getObjectName();
                 String errorMessage = error.getDefaultMessage();
 
-                errorString.append(fieldName).append(": ").append(errorMessage).append("\n");
+                errorString.append(fieldName.toUpperCase()).append(": ").append(errorMessage).append("\n");
             }
         }
         errors = errorString.toString();
@@ -37,7 +37,8 @@ public class MyDataValidator {
     }
 
     public void dataClean() {
-        errors = "";
         bindingResultList = new ArrayList<>();
+        errors = "";
     }
 }
+
