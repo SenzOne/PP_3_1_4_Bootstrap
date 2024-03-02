@@ -4,7 +4,7 @@
 * **password:** admin
 
 ### user:
-* **login:** user1@ya.ru
+* **login:** user@mail
 * **password:** user
 
 # Задание:
