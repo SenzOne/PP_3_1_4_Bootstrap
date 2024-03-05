@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.services;
 
-
-
 import ru.kata.spring.boot_security.models.Role;
 
 import java.util.Set;

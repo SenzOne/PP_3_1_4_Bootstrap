@@ -6,14 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.models.Person;
 import ru.kata.spring.boot_security.services.AdminService;
-import ru.kata.spring.boot_security.validators.MyDataValidator;
-import ru.kata.spring.boot_security.validators.PersonValidator;
-import ru.kata.spring.boot_security.validators.RoleValidator;
 import ru.kata.spring.boot_security.services.UserDataValidationService;
-
+import ru.kata.spring.boot_security.validators.MyDataValidator;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Контроллер, отвечающий за управление пользователями администратором.
@@ -21,6 +21,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private static final Logger LOGGER = LogManager.getLogger(AdminController.class.getName());
 
     private final AdminService adminService;
     private final MyDataValidator myDataValidator;
@@ -84,10 +86,9 @@ public class AdminController {
                          @RequestParam(value = "role", required = false) @Valid List<String> role,
                          Model model) {
 
-        System.out.println(person.getPassword());
-        System.out.println(person.getEmail());
+        LOGGER.info(person.getPassword());
+        LOGGER.info(person.getEmail());
         String allErrors = userDataValidationService.validateUserData(person, role, model);
-        System.out.println();
 
         // Если есть ошибки, вернуть перенаправление на страницу администратора
         if (!allErrors.isEmpty()) {
